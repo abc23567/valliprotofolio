@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="{{ student.name }} – Student Portfolio | {{ student.grade }} at {{ student.school }}. Aspiring {{ student.aspiration }}."/>
+  <meta name="keywords" content="student portfolio, {{ student.name }}, abacus, coding, mathematics, GEMMA school"/>
+  <meta property="og:title" content="{{ student.name }} – Student Portfolio"/>
+  <meta property="og:description" content="{{ student.intro }}"/>
+  <title>{{ student.name }} | Student Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+
+<!-- ═══════════════════════ CURSOR GLOW ════════════════════════════ -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ═══════════════════════ PARTICLES ══════════════════════════════ -->
+<div class="particles" id="particles"></div>
+
+<!-- ═══════════════════════ NAVBAR ═════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#home" class="nav-logo">
+      <span class="logo-icon">✦</span>
+      <span>{{ student.name }}</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"         class="nav-link">Home</a></li>
+      <li><a href="#about"        class="nav-link">About</a></li>
+      <li><a href="#academics"    class="nav-link">Academics</a></li>
+      <li><a href="#clubs"        class="nav-link">Clubs</a></li>
+      <li><a href="#achievements" class="nav-link">Awards</a></li>
+      <li><a href="#projects"     class="nav-link">Projects</a></li>
+      <li><a href="#certificates" class="nav-link">Certificates</a></li>
+      <li><a href="#skills"       class="nav-link">Skills</a></li>
+      <li><a href="#blog"         class="nav-link">Blog</a></li>
+      <li><a href="#contact"      class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <a href="/download-resume" class="btn-resume">
+        <i class="fas fa-download"></i> Resume
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ MOBILE MENU ════════════════════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></button>
+  <ul>
+    <li><a href="#home"         class="mobile-link">🏠 Home</a></li>
+    <li><a href="#about"        class="mobile-link">👤 About</a></li>
+    <li><a href="#academics"    class="mobile-link">📚 Academics</a></li>
+    <li><a href="#clubs"        class="mobile-link">🏫 Clubs</a></li>
+    <li><a href="#achievements" class="mobile-link">🏆 Awards</a></li>
+    <li><a href="#projects"     class="mobile-link">💡 Projects</a></li>
+    <li><a href="#certificates" class="mobile-link">📜 Certificates</a></li>
+    <li><a href="#skills"       class="mobile-link">⚡ Skills</a></li>
+    <li><a href="#blog"         class="mobile-link">✍️ Blog</a></li>
+    <li><a href="#contact"      class="mobile-link">📧 Contact</a></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                     SECTION 1: HOME                           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="home" class="hero-section">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-photo-wrapper">
+      <div class="photo-ring photo-ring-1"></div>
+      <div class="photo-ring photo-ring-2"></div>
+      <div class="photo-ring photo-ring-3"></div>
+      <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=400&fit=crop&crop=face"
+           alt="{{ student.name }}'s photo" class="hero-photo"
+           onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Ekavalli&size=200&background=6C63FF&color=fff&bold=true'"/>
+    </div>
+    <div class="hero-text">
+      <p class="hero-greeting animate-fade-up">Hello, I'm</p>
+      <h1 class="hero-name animate-fade-up delay-1">{{ student.name }}</h1>
+      <div class="hero-tags animate-fade-up delay-2">
+        <span class="tag-badge">{{ student.grade }}</span>
+        <span class="tag-badge">{{ student.school }}</span>
+        <span class="tag-badge tag-accent">Future {{ student.aspiration }}</span>
+      </div>
+      <p class="hero-intro animate-fade-up delay-3">{{ student.intro }}</p>
+      <div class="hero-cta animate-fade-up delay-4">
+        <a href="#about"   class="btn-primary"><i class="fas fa-user"></i> Know More</a>
+        <a href="#projects" class="btn-outline"><i class="fas fa-rocket"></i> View Projects</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar animate-fade-up delay-5">
+    <div class="stat-item" data-target="{{ student.stats.overall_percentage }}">
+      <span class="stat-number counter" data-target="{{ student.stats.overall_percentage }}">0</span><span class="stat-suffix">%</span>
+      <span class="stat-label">Overall Score</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-number counter" data-target="{{ student.stats.achievements }}">0</span>
+      <span class="stat-label">Achievements</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-number counter" data-target="{{ student.stats.clubs }}">0</span>
+      <span class="stat-label">Active Clubs</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-number counter" data-target="{{ student.stats.projects }}">0</span>
+      <span class="stat-label">Projects</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"><i class="fas fa-chevron-down"></i></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                  SECTION 2: ABOUT ME                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="about" class="section about-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Get to Know Me</span>
+      <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+      <p class="section-sub">A curious mind constantly learning, building, and growing.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <div class="about-info-grid">
+          <div class="info-item">
+            <span class="info-icon">👤</span>
+            <div>
+              <span class="info-label">Full Name</span>
+              <span class="info-value">{{ student.full_name }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🎂</span>
+            <div>
+              <span class="info-label">Date of Birth</span>
+              <span class="info-value">March 15, 2012</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">📚</span>
+            <div>
+              <span class="info-label">Grade</span>
+              <span class="info-value">{{ student.grade }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🏫</span>
+            <div>
+              <span class="info-label">School</span>
+              <span class="info-value">{{ student.school }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div>
+              <span class="info-label">Location</span>
+              <span class="info-value">{{ student.city }}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🚀</span>
+            <div>
+              <span class="info-label">Dream Career</span>
+              <span class="info-value">{{ student.aspiration }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right reveal">
+        <div class="about-desc-card">
+          <h3>My <span class="gradient-text">Story</span></h3>
+          <p>I'm a passionate 7th-grade student who believes that curiosity is the best superpower. From solving complex abacus problems to building IoT projects, I thrive when challenged.</p>
+          <p>My journey started with a simple abacus class when I was 8. Today, that same curiosity has led me to code websites, build irrigation systems, and compete on national stages. I believe the future belongs to those who dare to build it.</p>
+        </div>
+        <div class="hobbies-card">
+          <h3>Hobbies & <span class="gradient-text">Interests</span></h3>
+          <div class="hobbies-grid">
+            {% set hobby_icons = {"Mathematics": "➗", "Coding": "💻", "Robotics": "🤖", "Public Speaking": "🎤", "Chess": "♟️"} %}
+            {% for hobby in student.hobbies %}
+            <div class="hobby-chip">
+              <span>{{ hobby_icons.get(hobby, "⭐") }}</span>
+              <span>{{ hobby }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--               SECTION 3: ACADEMIC PERFORMANCE                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="academics" class="section academics-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Scholastic Excellence</span>
+      <h2 class="section-title">Academic <span class="gradient-text">Performance</span></h2>
+      <p class="section-sub">Maintaining consistent excellence across all subjects.</p>
+    </div>
+
+    <div class="academics-grid reveal">
+      <div class="grades-table-wrap">
+        <div class="overall-badge">
+          <div class="overall-ring">
+            <svg viewBox="0 0 120 120" class="ring-svg">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(108,99,255,0.15)" stroke-width="10"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradRing)" stroke-width="10"
+                      stroke-dasharray="314" stroke-dashoffset="17"
+                      stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              <defs>
+                <linearGradient id="gradRing" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#6C63FF"/>
+                  <stop offset="100%" style="stop-color:#F7971E"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="overall-text">
+              <span class="overall-num">{{ student.stats.overall_percentage }}</span>
+              <span class="overall-pct">%</span>
+              <span class="overall-label">Overall</span>
+            </div>
+          </div>
+        </div>
+
+        <table class="grades-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Marks</th>
+              <th>Grade</th>
+              <th>Performance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for subj in academics %}
+            <tr class="grade-row">
+              <td class="subj-name">{{ subj.subject }}</td>
+              <td class="subj-marks">{{ subj.marks }}/{{ subj.max }}</td>
+              <td>
+                <span class="grade-badge grade-{{ subj.grade_letter|replace('+','plus') }}">
+                  {{ subj.grade_letter }}
+                </span>
+              </td>
+              <td class="prog-cell">
+                <div class="prog-bar-track">
+                  <div class="prog-bar-fill" data-width="{{ subj.marks }}"></div>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-card">
+        <h3>Subject-wise <span class="gradient-text">Chart</span></h3>
+        <canvas id="radarChart" width="300" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--               SECTION 4: CLUB PARTICIPATION                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="clubs" class="section clubs-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">GEMMA Clubs</span>
+      <h2 class="section-title">Club <span class="gradient-text">Participation</span></h2>
+      <p class="section-sub">Active member across multiple excellence clubs at school.</p>
+    </div>
+
+    <div class="clubs-grid">
+      {% for club in clubs %}
+      <div class="club-card reveal" style="--delay: {{ loop.index0 * 0.1 }}s">
+        <div class="club-icon-wrap">{{ club.icon }}</div>
+        <div class="club-info">
+          <h3 class="club-name">{{ club.name }}</h3>
+          <span class="club-role">{{ club.role }}</span>
+          <p class="club-desc">{{ club.desc }}</p>
+        </div>
+        <div class="club-glow"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                SECTION 5: ACHIEVEMENTS                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="achievements" class="section achievements-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Recognition & Honors</span>
+      <h2 class="section-title">My <span class="gradient-text">Achievements</span></h2>
+      <p class="section-sub">A timeline of hard work, dedication, and well-earned recognition.</p>
+    </div>
+
+    <div class="timeline">
+      {% for ach in achievements %}
+      <div class="timeline-item reveal {{ 'left' if loop.index is odd else 'right' }}">
+        <div class="timeline-icon">{{ ach.icon }}</div>
+        <div class="timeline-card color-{{ ach.color }}">
+          <div class="timeline-year">{{ ach.year }}</div>
+          <h3 class="timeline-title">{{ ach.title }}</h3>
+          <span class="timeline-award award-{{ ach.color }}">{{ ach.award }}</span>
+          <p class="timeline-desc">{{ ach.desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="timeline-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                SECTION 6: PROJECTS                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="projects" class="section projects-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Build. Create. Innovate.</span>
+      <h2 class="section-title">Project <span class="gradient-text">Showcase</span></h2>
+      <p class="section-sub">Real-world solutions built with curiosity and code.</p>
+    </div>
+
+    <div class="projects-grid">
+      {% for proj in projects %}
+      <div class="project-card reveal" style="--delay: {{ loop.index0 * 0.15 }}s">
+        <div class="project-img-wrap">
+          <img src="{{ url_for('static', filename='images/' + proj.image) }}"
+               alt="{{ proj.title }}" class="project-img"
+               onerror="this.parentElement.innerHTML='<div class=\'project-img-fallback\'>' + proj.icon + '</div>'"/>
+          <div class="project-overlay">
+            <span class="project-icon-big">{{ proj.icon }}</span>
+          </div>
+        </div>
+        <div class="project-content">
+          <span class="project-subtitle">{{ proj.subtitle }}</span>
+          <h3 class="project-title">{{ proj.title }}</h3>
+          <p class="project-desc">{{ proj.desc }}</p>
+          <div class="project-tags">
+            {% for tag in proj.tags %}
+            <span class="tech-tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <div class="project-highlight">
+            <i class="fas fa-star"></i> {{ proj.highlight }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--              SECTION 7: CERTIFICATES GALLERY                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="certificates" class="section certs-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Credentials & Recognition</span>
+      <h2 class="section-title">Certificates & <span class="gradient-text">Awards</span></h2>
+      <p class="section-sub">A collection of achievements, certificates, and medals earned over the years.</p>
+    </div>
+
+    <div class="certs-grid">
+      {% for cert in certificates %}
+      <div class="cert-card reveal" style="--delay: {{ loop.index0 * 0.08 }}s" data-cert-id="{{ loop.index0 }}">
+        <div class="cert-medal" style="color: {{ cert.color }}">{{ cert.icon }}</div>
+        <div class="cert-info">
+          <h4 class="cert-title">{{ cert.title }}</h4>
+          <span class="cert-issuer">{{ cert.issuer }}</span>
+          <span class="cert-year" style="color: {{ cert.color }}">{{ cert.year }}</span>
+        </div>
+        <div class="cert-shine"></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                SECTION 8: SKILLS                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="skills" class="section skills-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Competencies</span>
+      <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+      <p class="section-sub">A diverse skill set spanning academics, technology, and leadership.</p>
+    </div>
+
+    <div class="skills-tabs-nav">
+      <button class="skills-tab active" data-tab="Academic">📐 Academic</button>
+      <button class="skills-tab" data-tab="Technical">💻 Technical</button>
+      <button class="skills-tab" data-tab="Soft Skills">🌟 Soft Skills</button>
+    </div>
+
+    <div class="skills-panels">
+      {% for category, skill_list in skills.items() %}
+      <div class="skills-panel reveal {{ 'active' if loop.first else '' }}" data-panel="{{ category }}">
+        <div class="skill-bars">
+          {% for skill in skill_list %}
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">{{ skill.name }}</span>
+              <span class="skill-pct">{{ skill.level }}%</span>
+            </div>
+            <div class="skill-track">
+              <div class="skill-fill" data-width="{{ skill.level }}"></div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <canvas class="skills-donut" id="donut{{ loop.index }}"></canvas>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                 SECTION 9: BLOG                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="blog" class="section blog-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Thoughts & Reflections</span>
+      <h2 class="section-title">My <span class="gradient-text">Blog</span></h2>
+      <p class="section-sub">Sharing stories, insights, and lessons learned along the way.</p>
+    </div>
+
+    <div class="blog-grid">
+      {% for post in blogs %}
+      <article class="blog-card reveal" style="--delay: {{ loop.index0 * 0.1 }}s">
+        <div class="blog-icon-banner">{{ post.icon }}</div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-cat">{{ post.category }}</span>
+            <span class="blog-date">{{ post.date }}</span>
+            <span class="blog-read">{{ post.read_time }}</span>
+          </div>
+          <h3 class="blog-title">{{ post.title }}</h3>
+          <p class="blog-excerpt">{{ post.excerpt }}</p>
+          <div class="blog-tags">
+            {% for tag in post.tags %}
+            <span class="blog-tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <a href="/blog/{{ post.id }}" class="blog-read-btn">
+            Read Full Post <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--               SECTION 10: TESTIMONIALS                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="testimonials" class="section testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">What Others Say</span>
+      <h2 class="section-title">Testimonials & <span class="gradient-text">Feedback</span></h2>
+    </div>
+
+    <div class="testimonials-slider" id="testimonialsSlider">
+      <div class="testimonials-track" id="testimonialsTrack">
+        {% for t in testimonials %}
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">{{ t.text }}</p>
+          <div class="testimonial-stars">
+            {% for i in range(t.rating) %}⭐{% endfor %}
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">{{ t.avatar }}</div>
+            <div class="author-info">
+              <span class="author-name">{{ t.name }}</span>
+              <span class="author-role">{{ t.role }}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="slider-dots" id="sliderDots">
+        {% for t in testimonials %}
+        <button class="dot {{ 'active' if loop.first }}" data-idx="{{ loop.index0 }}"></button>
+        {% endfor %}
+      </div>
+      <div class="slider-nav">
+        <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                SECTION 11: CONTACT                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Get in Touch</span>
+      <h2 class="section-title">Contact <span class="gradient-text">Me</span></h2>
+      <p class="section-sub">Whether you're a teacher, mentor, or fellow student — I'd love to connect!</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-detail">
+          <div class="contact-icon-wrap"><i class="fas fa-envelope"></i></div>
+          <div>
+            <span class="contact-label">Email</span>
+            <a href="mailto:{{ student.email }}" class="contact-value">{{ student.email }}</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon-wrap"><i class="fas fa-school"></i></div>
+          <div>
+            <span class="contact-label">School</span>
+            <span class="contact-value">{{ student.school }}</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <span class="contact-label">Location</span>
+            <span class="contact-value">{{ student.city }}</span>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <h3>Connect on</h3>
+          <div class="socials">
+            <a href="#" class="social-btn" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-btn" aria-label="Scratch"><i class="fas fa-cat"></i></a>
+            <a href="#" class="social-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required/>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="What's this about?" required/>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
+        </div>
+        <div id="formFeedback" class="form-feedback hidden"></div>
+        <button type="submit" class="btn-primary btn-submit" id="submitBtn">
+          <i class="fas fa-paper-plane"></i>
+          <span>Send Message</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ══════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">✦ {{ student.name }}</div>
+    <p class="footer-tagline">Aspiring {{ student.aspiration }} • {{ student.grade }} • {{ student.school }}</p>
+    <p class="footer-copy">© 2024 {{ student.name }}. Crafted with 💜 and lots of curiosity.</p>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Pass backend data to JS
+  const ACADEMICS_DATA = {{ academics | tojson }};
+  const SKILLS_DATA    = {{ skills | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

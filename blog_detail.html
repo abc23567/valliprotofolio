@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ blog.title }} | {{ student.name }}'s Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  <style>
+    .blog-detail-container { max-width: 800px; margin: 120px auto 60px; padding: 0 2rem; }
+    .blog-detail-header { text-align: center; margin-bottom: 3rem; }
+    .blog-detail-icon { font-size: 5rem; display: block; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+    .blog-detail-category { display: inline-block; background: var(--gradient-primary); color: white; padding: 0.4rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; }
+    .blog-detail-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+    .blog-detail-meta { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .blog-detail-body { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; padding: 3rem; line-height: 1.9; color: var(--text-secondary); font-size: 1.05rem; }
+    .blog-detail-body p { margin-bottom: 1.5rem; }
+    .blog-detail-body strong { color: var(--text-primary); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-primary); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: gap 0.3s; }
+    .back-link:hover { gap: 0.8rem; }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo"><span class="logo-icon">✦</span><span>{{ student.name }}</span></a>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon" id="themeIcon"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="blog-detail-container">
+  <a href="/#blog" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+  <div class="blog-detail-header">
+    <span class="blog-detail-icon">{{ blog.icon }}</span>
+    <span class="blog-detail-category">{{ blog.category }}</span>
+    <h1 class="blog-detail-title gradient-text">{{ blog.title }}</h1>
+    <div class="blog-detail-meta">
+      <span><i class="fas fa-calendar"></i> {{ blog.date }}</span>
+      <span><i class="fas fa-clock"></i> {{ blog.read_time }}</span>
+    </div>
+  </div>
+  <div class="blog-detail-body">
+    {% for para in blog.content.split('\n\n') %}
+      {% if para.startswith('**') %}
+        <p><strong>{{ para.replace('**','') }}</strong></p>
+      {% else %}
+        <p>{{ para }}</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-logo">✦ {{ student.name }}</div>
+    <p class="footer-copy">© 2024 {{ student.name }}. Crafted with 💜</p>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
